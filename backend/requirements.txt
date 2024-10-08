@@ -1,0 +1,9 @@
+# Download models en_core_web_lg and en_core_web_sm
+openai
+spacy
+python-dotenv
+fastapi 
+uvicorn
+python-multipart
+PyPDF2
+pydantic

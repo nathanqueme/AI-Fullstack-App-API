@@ -1,0 +1,245 @@
+.hide-scrollbar * {
+    scrollbar-width: none;
+}
+
+/* Hide scrollbar for elements with the 'hide-scrollbar' class */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+/* GOOGLE MUI */
+/* Avoids uppercased text */
+.MuiButton-contained {
+    text-transform: none !important;
+    font-weight: 600 !important;
+}
+
+.MuiButton-text {
+    text-transform: none !important;
+}
+
+.MuiButton-outlined {
+    text-transform: none !important;
+}
+
+.MuiButton-underlined {
+    text-transform: none !important;
+}
+
+.MuiDialogTitle-root {
+    font-weight: 600 !important;
+}
+
+
+
+
+/** 
+ * PADDING (inner)
+ * "iph" stands for "inner padding horizontal".
+ * "ipv" stands for "inner padding vertical".
+*/
+.iph {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.ipv {
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+.ipl {
+    padding-left: 18px;
+}
+
+.ipr {
+    padding-right: 18px;
+}
+
+.ipt {
+    padding-top: 18px;
+}
+
+.ipb {
+    padding-bottom: 18px;
+}
+
+/** PADDING (outer) */
+.oph {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.opv {
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.opl {
+    padding-left: 35px;
+}
+
+.opr {
+    padding-right: 35px;
+}
+
+.opt {
+    padding-top: 35px;
+}
+
+.opb {
+    padding-bottom: 35px;
+}
+
+
+body {
+    /* egg-white #e1e1f2 */
+    color-scheme: #f5f5f5;
+}
+
+
+
+
+.rainbow-bg {
+    background-image: linear-gradient(to right, red, yellow, green, rgb(38, 143, 223));
+}
+
+.rainbow-text {
+    /*background-image: linear-gradient(to right, red, orange, yellow, green, rgb(37, 148, 232), rgb(201, 45, 201), rgb(234, 113, 226)); */
+    background-image: linear-gradient(to right, red, yellow, green, rgb(38, 143, 223));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.no-link {
+    pointer-events: none;
+    text-decoration: none;
+    cursor: default;
+}
+
+
+
+.rectangle-to-circle {
+    animation: square-to-circle 6s ease-in-out infinite alternate;
+}
+@keyframes square-to-circle {
+    0% {
+        border-radius: 10%;
+    }
+
+    50% {
+        border-radius: 50%;
+    }
+
+    100% {
+        border-radius: 10%;
+    }
+}
+
+/* does an horizontal wave */
+.horizonzal-wave {
+    animation: horizonzal-wave-anim 10s ease-in-out infinite alternate;
+}
+@keyframes horizonzal-wave-anim {
+    0% {
+        border-top-right-radius: 8;
+        border-bottom-right-radius: 8;
+    }
+
+    50% {
+        border-top-right-radius: 110px;
+        border-bottom-right-radius: 110px;
+    }
+
+    100% {
+        border-top-right-radius: 8;
+        border-bottom-right-radius: 8;
+    }
+}
+
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    justify-items: start;
+    align-items: start;
+  }
+  
+  .grid-item {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  
+
+
+
+  .page-selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px;
+  }
+  .page-selector-option {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-inline: 28px;
+    padding-top: 32px;
+    padding-bottom: 38px;
+    border-radius: 12px;
+    cursor: pointer;
+    min-height: 390px;
+  }
+
+
+  .audio-player-anim {
+    display: flex;
+    /* align-items: flex-end; */
+    align-items: center; 
+    justify-content: center;
+    height: 40px;
+  }
+  
+  .bar {
+    width: 2.5px;
+    height: 5px;
+    margin: 0 2px;
+    border-radius: 40px;
+    background-color: #0095ff;
+    animation: grow 1s infinite alternate;
+  }
+  
+  @keyframes grow {
+    0% {
+      height: 4px;
+    }
+    100% {
+      height: 16px;
+    }
+  }
+
+  .bar-1 {
+    animation-delay: 0.15s;
+  }
+  
+  .bar-2 {
+    animation-delay: 0.3s;
+  }
+  
+  .bar-3 {
+    animation-delay: 0.45s;
+  }
+  
