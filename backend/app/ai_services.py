@@ -1,7 +1,7 @@
 from openai import OpenAI
-from app.nlp import NLP
+from typing import Dict, Any
+from app.text_analyzer import NLP
 from config import CONFIG
-
 
 class LLM:
     def __init__(self):
@@ -9,18 +9,13 @@ class LLM:
         self.list_format = CONFIG["OPENAI"]["LIST_FORMAT_PROMPT"]
         self.nlp = NLP()
 
-    # Information extraction + Summarization
     def get_lexical_fields(self, text: str) -> str:
-        """
-        Extracts and lists the most important lexical fields 
-        and their corresponding words.
-        """
+        """Extracts and lists the most important lexical fields and their corresponding words."""
         words = [w["text"] for w in self.nlp.get_vocab(text)]
         words_string = " ".join(words)
-        prompt = f"""
-        List the most important lexical fields and their exact words. 
-        \n{self.list_format} e.g. Nature: - 1. Nature: trees, flowers, grass.
-        \nText: {words_string}"""
+        prompt = f"""List the most important lexical fields and their exact words. 
+{self.list_format} e.g. Nature: - 1. Nature: trees, flowers, grass.
+Text: {words_string}"""
         
         completion = self.client.chat.completions.create(
             model="gpt-4",
@@ -29,21 +24,16 @@ class LLM:
                 {"role": "user", "content": prompt}
             ]
         )
-        lexical_field = completion.choices[0].message.content.strip()
-        return lexical_field
+        return completion.choices[0].message.content.strip()
 
-    # Knowledge extraction + Summarization
-    def get_key_metrics(self, text: str):
-        """
-        Extracts key metrics by summarizing sentences 
-        with numbers and simplifying them.
-        """
+    def get_key_metrics(self, text: str) -> Dict[str, Any]:
+        """Extracts key metrics by summarizing sentences with numbers and simplifying them."""
         key_metrics = self.nlp.get_sentences_with_numbers(text)
-        for i, stc in enumerate(key_metrics):
-            stc_text = stc["text"]
-            numbers = "|".join([num["text"] for num in stc["numbers"]])
-            prompt = f"""Shorten this sentence by removing as many words except numbers ({
-                numbers}), the context and what they refer to. \nSentence: {stc_text}"""
+        for i, sentence in enumerate(key_metrics):
+            sentence_text = sentence["text"]
+            numbers = "|".join([num["text"] for num in sentence["numbers"]])
+            prompt = f"""Shorten this sentence by removing as many words except numbers ({numbers}), the context and what they refer to.
+Sentence: {sentence_text}"""
             
             completion = self.client.chat.completions.create(
                 model="gpt-4",
@@ -55,15 +45,14 @@ class LLM:
             simplified = completion.choices[0].message.content.strip().replace("\n", "")
             key_metrics[i]["simplified"] = simplified
 
-        sentences = [stc["simplified"] for stc in key_metrics]
+        sentences = [sentence["simplified"] for sentence in key_metrics]
         return {"key_metrics": key_metrics, "sentences": sentences}
 
-    # Knowledge extraction + Summarization
     def get_key_points(self, text: str) -> str:
-        """
-        Summarizes the key points and knowledge from the text.
-        """
-        prompt = f"""List knowledge we can learn from the key points. \n{self.list_format}\nText: {text}"""
+        """Summarizes the key points and knowledge from the text."""
+        prompt = f"""List knowledge we can learn from the key points.
+{self.list_format}
+Text: {text}"""
         
         completion = self.client.chat.completions.create(
             model="gpt-4",
@@ -72,15 +61,12 @@ class LLM:
                 {"role": "user", "content": prompt}
             ]
         )
-        key_points = completion.choices[0].message.content.strip()
-        return key_points
+        return completion.choices[0].message.content.strip()
 
-    # Summarization
     def remove_jargon(self, text: str) -> str:
-        """
-        Removes jargon, stuttering, and unnecessary repetitions from the text.
-        """
-        prompt = f"""Remove jargon as well as forms of stuttering and unnecessary repetitions. \nText: {text}"""
+        """Removes jargon, stuttering, and unnecessary repetitions from the text."""
+        prompt = f"""Remove jargon as well as forms of stuttering and unnecessary repetitions.
+Text: {text}"""
         
         completion = self.client.chat.completions.create(
             model="gpt-4",
@@ -89,15 +75,13 @@ class LLM:
                 {"role": "user", "content": prompt}
             ]
         )
-        clean_text = completion.choices[0].message.content.strip()
-        return clean_text
+        return completion.choices[0].message.content.strip()
 
-    # Recommendation
     def recommend_learning_topics(self, text: str) -> str:
-        """
-        Recommends important topics to learn based on the text.
-        """
-        prompt = f"""List by importance information we should pay attention to and learn.\n{self.list_format}\nText: {text}"""
+        """Recommends important topics to learn based on the text."""
+        prompt = f"""List by importance information we should pay attention to and learn.
+{self.list_format}
+Text: {text}"""
         
         completion = self.client.chat.completions.create(
             model="gpt-4",
@@ -106,5 +90,4 @@ class LLM:
                 {"role": "user", "content": prompt}
             ]
         )
-        topics = completion.choices[0].message.content.strip()
-        return topics
+        return completion.choices[0].message.content.strip()

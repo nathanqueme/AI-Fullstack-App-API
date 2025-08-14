@@ -5,9 +5,9 @@ import os
 import shutil
 import uvicorn
 
-from app.nlp import NLP
-from app.llm import LLM
-from app.extract import FileProcessor
+from app.text_analyzer import NLP
+from app.ai_services import LLM
+from app.file_processor import FileProcessor
 from app.models import (
     LexicalFields, KeyMetrics, KeyPoints,
     NoJargon, LearningTopics, Vocabulary, KeyPoint
